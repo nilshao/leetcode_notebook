@@ -59,4 +59,154 @@ struct TrieNode {
 
 例如，我们知道，前缀树的每个节点表示一个字符串，但并不是所有由前缀树表示的字符串都是有意义的。如果我们只想在前缀树中存储单词，那么我们可能需要在每个节点中声明一个布尔值（Boolean）作为标志，来表明该节点所表示的字符串是否为一个单词。
 
+## 基本操作：插入
 
+伪代码：
+
+```
+1. Initialize: cur = root
+2. for each char c in target string S:
+3. 		if cur does not have a child c:
+4.			cur.children[c] = new Trie node
+5.		cur = cur.children[c]
+6. cur is the node which represents the string S
+```
+
+注意：不要忘记初始化root
+
+## 基本操作：搜索
+
+所有节点的后代都与该节点相对应字符串的有着共同前缀。因此，很容易搜索以特定前缀开头的任何单词。
+
+同样地，我们可以根据给定的前缀沿着树形结构搜索下去。一旦我们找不到我们想要的子节点，搜索就以失败终止。否则，搜索成功。伪代码：
+
+```C++
+1. Initialize: cur = root
+2. for each char c in target string S:
+3. 		if cur does not have a child c:
+4.			search fails
+5.		cur = cur.children[c]
+6. search successes
+```
+
+### 搜索单词
+
+## 实现一个Trie树
+
+实现一个 Trie (前缀树)，包含 insert, search, 和 startsWith 这三个操作。
+
+### 示例:
+
+```
+Trie trie = new Trie();
+
+trie.insert("apple");
+trie.search("apple");   // 返回 true
+trie.search("app");     // 返回 false
+trie.startsWith("app"); // 返回 true
+trie.insert("app");   
+trie.search("app");     // 返回 true
+
+```
+
+### 说明:
+
++ 你可以假设所有的输入都是由小写字母 a-z 构成的。
++ 保证所有输入均为非空字符串。
+
+```C++
+
+class Trie {
+public:
+    /** Initialize your data structure here. */
+    Trie() {
+        
+    }
+    
+    /** Inserts a word into the trie. */
+    void insert(string word) {
+
+    }
+    
+    /** Returns if the word is in the trie. */
+    bool search(string word) {
+
+    }
+    
+    /** Returns if there is any word in the trie that starts with the given prefix. */
+    bool startsWith(string prefix) {
+
+    }
+};
+
+/**
+ * Your Trie object will be instantiated and called as such:
+ * Trie* obj = new Trie();
+ * obj->insert(word);
+ * bool param_2 = obj->search(word);
+ * bool param_3 = obj->startsWith(prefix);
+ */
+
+ ```
+
+ ## Solution and Analysis:
+
+```C++
+struct TrieNode{
+    bool flag = 0;
+    unordered_map<char, TrieNode*> next;
+};
+class Trie {
+private:
+    TrieNode* root;
+public:
+    /** Initialize your data structure here. */
+    Trie() {
+        root = new TrieNode();
+    }
+    
+    /** Inserts a word into the trie. */
+    void insert(string word) {
+        TrieNode* p = root;
+        for(int i = 0; i<word.length(); i++){
+            if((p->next).count(word[i]) <= 0) {
+                 (p->next).insert(make_pair(word[i], new TrieNode()));
+            }
+           p = (p->next)[word[i]];
+        }
+        p->flag = 1;
+    }
+    
+    /** Returns if the word is in the trie. */
+    bool search(string word) {
+       TrieNode* p = root;
+        for (int i = 0; i < word.length(); ++i) {
+            if ((p->next).count(word[i]) <= 0) {
+                return false;
+            }
+            p = (p->next)[word[i]];
+        }
+        return p->flag;
+    }
+    
+    /** Returns if there is any word in the trie that starts with the given prefix. */
+    bool startsWith(string prefix) {
+        TrieNode* p = root;
+        for (int i = 0; i < prefix.length(); ++i) {
+            if ((p->next).count(prefix[i]) <= 0) {
+                return false;
+            }
+            p = (p->next)[prefix[i]];
+        }
+        return true;
+    }
+};
+
+/**
+ * Your Trie object will be instantiated and called as such:
+ * Trie* obj = new Trie();
+ * obj->insert(word);
+ * bool param_2 = obj->search(word);
+ * bool param_3 = obj->startsWith(prefix);
+ */
+```
