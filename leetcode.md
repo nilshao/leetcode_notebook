@@ -50,6 +50,9 @@ public:
             point*=flag;
             return point;
         }
+        ```
+
+```C++
 //维护一个单调递增栈
     stack<int> find_increase_stack(vector<int>& nums){
         stack<int> res; //返回res
@@ -77,7 +80,9 @@ public:
             }
         }
         return res;
+```
 
+```C++
 //求根节点到某节点路径
     //main函数里已知或自定义变量
     TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p){
@@ -105,6 +110,9 @@ public:
         path.pop_back();
         
     }
+```
+
+```C++
 //检测int 数字变成二进制之后有多少个1
     //把一个整数减去1，再与原整数相与，会把原整数的最右边的1变成0
     int  NumberOf1(int n) {
@@ -116,6 +124,9 @@ public:
          }
          return cnt;
      }
+```
+
+```C++
 //最大公约数
     int gcd(int x, int y){
         return !x ? y : gcd(y % x, x);
